@@ -35,220 +35,74 @@
 
         <div class="row">
             <div class="form-group" id="divUser" style="padding-left: 20%">
-                %{--<div class="col-md-6" id="chartUser"></div>--}%
-                <div class="col-md-8" id="chartUser2"></div>
+                <div class="col-md-8" id="chartUser"></div>
             </div>
         </div>
     </div>
-</sec:isDashboardForUser>
-%{--<sec:isDashboardForManagement>--}%
-    %{--<div class="container-fluid">--}%
-        %{--<div class="row" style="padding-left: 16px;padding-right: 16px;">--}%
-            %{--<div class="panel panel-primary">--}%
-                %{--<div class="panel-body">--}%
-                    %{--<div class="form-group">--}%
-                        %{--<label class="col-md-1 control-label label-optional"--}%
-                               %{--for="month">Month:</label>--}%
 
-                        %{--<div class="col-md-2">--}%
-                            %{--<input type='text' tabindex="1" required="required" onkeydown="return false;"--}%
-                                   %{--class="kendo-date-picker" id="month" name="month"--}%
-                                   %{--placeholder="Month" validationMessage="Required"/>--}%
-                        %{--</div>--}%
-                    %{--</div>--}%
-                %{--</div>--}%
-            %{--</div>--}%
-        %{--</div>--}%
+    <script language="javascript">
+        var dropDownService, chartUser;
+        $(document).ready(function () {
+            var str = moment().subtract(1, 'months').format('MMMM YYYY');
 
-        %{--<div id="divManagement">--}%
-            %{--<div class="full">--}%
-                %{--<div id="chartManagement"></div>--}%
-            %{--</div>--}%
-        %{--</div>--}%
-    %{--</div>--}%
-%{--</sec:isDashboardForManagement>--}%
+            $('#month').kendoDatePicker({
+                format: "MMMM yyyy",
+                parseFormats: ["yyyy-MM-dd"],
+                start: "year",
+                depth: "year",
+                change: populateKendoChart
+            }).data("kendoDatePicker");
+            $('#month').val(moment().format('MMMM YYYY'));
 
-
-
-<script language="javascript">
-    var dropDownService, chartUser, chartUser2, chartManagement;
-    $(document).ready(function () {
-        var str = moment().subtract(1, 'months').format('MMMM YYYY');
-
-        $('#month').kendoDatePicker({
-            format: "MMMM yyyy",
-            parseFormats: ["yyyy-MM-dd"],
-            start: "year",
-            depth: "year",
-            change: populateKendoChart
-        }).data("kendoDatePicker");
-//        $('#month').val(str);
-          $('#month').val(moment().format('MMMM YYYY'));
-
-//        createUserChart();
-        createUserPieChart();
-//        createManagementChart();
-        populateKendoChart();
-    });
-    function populateKendoChart() {
-        var month = $('#month').val();
-/*        if (!document.getElementById("divUser")) {
-            var management = "${createLink(controller: 'login', action: 'lstManagementDashboard')}?month=" + month;
-            chartManagement.dataSource.transport.options.read.url = management;
-            chartManagement.dataSource.read();
-        } else {
-            var user = "${createLink(controller: 'login', action: 'lstUserDashboard')}?month=" + month;
-            chartUser.dataSource.transport.options.read.url = user;
-            chartUser.dataSource.read();*/
-            var user2 = "${createLink(controller: 'login', action: 'lstUserPieDashboard')}?month=" + month;
-            chartUser2.dataSource.transport.options.read.url = user2;
-            chartUser2.dataSource.read();
-//        }
-    }
-    function createUserChart() {
-        $('#chartUser').kendoChart({
-            title: {
-                text: "Meeting Status"
-            },
-            autoBind: false,
-            dataSource: {
-                transport: {
-                    read: {
-                        url: false,
-                        dataType: "json"
-                    }
-                }
-            },
-            chartArea: {
-                background: ""
-            },
-            seriesDefaults: {
-                type: "column",
-                stack: true
-            },
-            seriesColors: ["#ff8a00", "#069302"],
-            series: [
-                {
-                    name: 'No. of Actions',
-                    field: 'a_col',
-                    colorField: "a_color"
-                },
-                {
-                    name: 'Completed',
-                    field: 't_col',
-                    colorField: "t_color"
-                }
-            ],
-            legendItemClick: function(e) {
-                e.preventDefault();
-            },
-            categoryAxis: {
-                field: 'cat_axe',
-                labels: {
-                    rotation: -45
-                }
-            },
-            tooltip: {
-                visible: true,
-                format: "{0}",
-                width: 400,
-                height: 200,
-                template: "#= dataItem.goal# <br/><strong> Completed: #= dataItem.a_pert# % </strong>"
-            }
+            createUserPieChart();
+            populateKendoChart();
         });
-        chartUser = $("#chartUser").data("kendoChart");
-    }
-    function createUserPieChart() {
-        $('#chartUser2').kendoChart({
-            title: {
-                text: "Critical Decision Status"
-            },
-            legend: {
-                visible: false
-            },
-            autoBind: false,
-            dataSource: {
-                transport: {
-                    read: {
-                        url: false,
-                        dataType: "json"
-                    }
-                }
-            },
-            chartArea: {
-                background: ""
-            },
-            seriesDefaults: {
-                type: "pie",
-                labels: {
-                    visible: true,
-                    background: "transparent",
-                    template: "#= category #: \n #= value#"
-                }
-            },
-            series: [{
-                field: "issue_count",
-                categoryField: "act_name",
-                colorField: "act_color"
-            }],
-            tooltip: {
-                visible: true
-            }
-        });
-        chartUser2 = $("#chartUser2").data("kendoChart");
-    }
-    function createManagementChart() {
-        $('#chartManagement').kendoChart({
-            title: {
-                text: "CSU/Sector Wise Goal Achievement Status"
-            },
-            autoBind: false,
-            dataSource: {
-                transport: {
-                    read: {
-                        url: false,
-                        dataType: "json"
-                    }
-                }
-            },
-            seriesDefaults: {
-                type: "column",
-                stack: true
-            },
-            seriesColors: ["#ff8a00", "#069302"],
-            series: [
-                {
-                    name: 'Remaining',
-                    field: 'a_pert',
-                    colorField: "a_color"
+        function populateKendoChart() {
+            var month = $('#month').val();
+            var actionUrl = "${createLink(controller: 'login', action: 'lstUserPieDashboard')}?month=" + month;
+            chartUser.dataSource.transport.options.read.url = actionUrl;
+            chartUser.dataSource.read();
+        }
+        function createUserPieChart() {
+            $('#chartUser').kendoChart({
+                title: {
+                    text: "Critical Decision Status"
                 },
-                {
-                    name: 'Achieved',
-                    field: 'r_pert',
-                    colorField: "r_color"
-                }
-            ],
-            legendItemClick: function(e) {
-                e.preventDefault();
-            },
-            categoryAxis: {
-                field: 'short_name',
-                labels: {
-                    rotation: -90
+                legend: {
+                    visible: false
                 },
-                majorGridLines: {
+                autoBind: false,
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: false,
+                            dataType: "json"
+                        }
+                    }
+                },
+                chartArea: {
+                    background: ""
+                },
+                seriesDefaults: {
+                    type: "pie",
+                    labels: {
+                        visible: true,
+                        background: "transparent",
+                        template: "#= category #: \n #= value#"
+                    }
+                },
+                series: [{
+                    field: "issue_count",
+                    categoryField: "act_name",
+                    colorField: "act_color"
+                }],
+                tooltip: {
                     visible: true
                 }
+            });
+            chartUser = $("#chartUser").data("kendoChart");
+        }
+    </script>
 
-            },
-            tooltip: {
-                visible: true,
-                format: "{0}",
-                width: 400,
-                height: 200,
-                template: "#= dataItem.service # <br/> <strong> Achieved: #= dataItem.a_pert# % </strong>"
-            }
-        });
-        chartManagement = $("#chartManagement").data("kendoChart");
-    }
-</script>
+</sec:isDashboardForUser>
+

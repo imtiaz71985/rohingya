@@ -47,6 +47,7 @@
             format: "dd/MM/yyyy hh:mm tt",
             parseFormats: ["yyyy-MM-dd hh:mm tt"]
         }).data("kendoDateTimePicker");
+
         $("#attendeesEmp").kendoMultiSelect({
             dataTextField: "name",
             dataValueField: "id",
