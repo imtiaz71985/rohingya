@@ -61,6 +61,10 @@
         multiSelectAttendees.setDataSource(${lstEmployee});
         dropDownCxTeam = initKendoDropdown($('#teamId'), "team_name","team_id", null);
         dropDownCxTeam.setDataSource(getKendoEmptyDataSource(dropDownCxTeam, null));
+        if(dropDownCxProject.dataSource.data().length<=1){
+            dropDownCxProject.readonly();
+            populateTeamList();
+        }
         initializeForm($("#meetingScheduleForm"), onSubmitSchedule);
         defaultPageTile("Create Schedule",null);
     }

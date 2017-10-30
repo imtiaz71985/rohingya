@@ -100,6 +100,7 @@
                 descStr.value(htmlDecode(data.list[0].descStr));*/
                 $("#issues").val(data.list[0].issues);
                 $("#attendeesOthers").val(data.list[0].attendeesOthers);
+                $("#heldOn").val( moment(data.list[0].scheduledDate).format("DD/MM/YYYY HH:mm "));
 
                 if (data.list[0].attendeesEmp) multiSelectAttendees.value(data.list[0].attendeesEmp.split(","));
 

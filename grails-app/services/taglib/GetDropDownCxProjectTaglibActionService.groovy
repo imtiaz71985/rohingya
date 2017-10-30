@@ -120,7 +120,7 @@ class GetDropDownCxProjectTaglibActionService extends BaseService implements Act
                 strAttributes = strAttributes + "${it.key} = '${it.value}' "
             }
         }
-        if (showHints.booleanValue()) {
+        if (showHints.booleanValue() && lstCxProject.data.size()>1) {
             lstCxProject = listForKendoDropdown(lstCxProject.data, "project_name", "Please Select")
         }
         String html = "<select ${strAttributes}>\n" + SELECT_END
