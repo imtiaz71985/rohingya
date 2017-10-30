@@ -83,7 +83,7 @@
                 }
             },
             sort: {field: 'id', dir: 'asc'},
-            pageSize: false,
+            pageSize: getDefaultPageSize(),
             serverPaging: true,
             serverFiltering: true,
             serverSorting: true
@@ -239,7 +239,7 @@
                 }
             },
             sort: {field: 'id', dir: 'asc'},
-            pageSize: false,
+            pageSize: getDefaultPageSize(),
             serverPaging: true,
             serverFiltering: true,
             serverSorting: true
@@ -254,7 +254,11 @@
             sortable: true,
             resizable: true,
             reorderable: true,
-            pageable: false,
+            pageable: {
+                refresh: true,
+                pageSizes: getDefaultPageSizes(),
+                buttonCount: 4
+            },
             columns: [
                 {field: "owner", title: "Issued By", width: "10%", sortable: false, filterable: false},
                 {field: "issueName", title: "Issue", width: "10%", sortable: false, filterable: false},
