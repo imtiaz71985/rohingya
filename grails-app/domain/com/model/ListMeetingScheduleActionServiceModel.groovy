@@ -2,9 +2,9 @@ package com.model
 
 class ListMeetingScheduleActionServiceModel {
 
-    public static final String MODEL_NAME = 'list_meeting_Schedule_action_service_model'
+    public static final String MODEL_NAME = 'list_meeting_schedule_action_service_model'
     public static final String SQL_LIST_MEETING_LOG_MODEL = """
-       CREATE OR REPLACE VIEW list_meeting_Schedule_action_service_model AS
+       CREATE OR REPLACE VIEW list_meeting_schedule_action_service_model AS
           SELECT ms.id, ms.version,ms.project_id,ms.team_id,ms.project_name,ms.team_name, ms.scheduled_date,ms.desc_str,ms.issues,
           ms.attendees_others,ms.attendees_emp,ms.is_recorded,
               (SELECT GROUP_CONCAT(NAME SEPARATOR ', ') FROM mis.employee
