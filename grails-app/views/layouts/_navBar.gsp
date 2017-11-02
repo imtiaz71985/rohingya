@@ -116,6 +116,30 @@
                             <!-- /.nav-second-level -->
                         </li>
                     </sec:ifAnyUrls>
+                    <sec:ifAnyUrls
+                            urls="/secUser/show,/secRole/show,/featureManagement/show">
+                        <li>
+                            <a href="#"><i class="fa fa-users"></i>&nbsp;User Management<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <sec:access url="/secUser/show">
+                                    <li>
+                                        <a href="#secUser/show"><i class="fa fa-user"></i>&nbsp;User</a>
+                                    </li>
+                                </sec:access>
+                                <sec:access url="/secRole/show">
+                                    <li>
+                                        <a href="#secRole/show"><i class="fa fa-cog"></i>&nbsp;Role</a>
+                                    </li>
+                                </sec:access>
+                                <sec:access url="/featureManagement/show">
+                                    <li>
+                                        <a href="#featureManagement/show"><i class="fa fa-cogs"></i>&nbsp;Role Right</a>
+                                    </li>
+                                </sec:access>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                    </sec:ifAnyUrls>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

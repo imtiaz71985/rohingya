@@ -1,5 +1,5 @@
 
-eventCreateWarStart = { warName, stagingDir ->
+/*eventCreateWarStart = { warName, stagingDir ->
     if (grailsEnv == "production") {
         def sharedLibsDir = "${grailsSettings.projectWorkDir}/sharedLibs"
 
@@ -15,4 +15,4 @@ eventCreateWarStart = { warName, stagingDir ->
 
         println "Shared JARs put into ${sharedLibsDir}"
     }
-}
+}*/
