@@ -52,8 +52,10 @@ class UpdateMeetingScheduleActionService extends BaseService implements ActionSe
         try {
             MeetingSchedule meetingSchedule = (MeetingSchedule) result.get(MEETING_SCHEDULE)
             meetingSchedule.save()
-            String contactEmail= meetingLogService.getAttendeesOfficialEmail(meetingSchedule.attendeesEmp)
-            meetingLogService.sendMail(contactEmail,meetingSchedule)
+            String contactEmail = meetingLogService.getAttendeesOfficialEmail(meetingSchedule.attendeesEmp)
+            if (contactEmail!= null){
+                meetingLogService.sendMail(contactEmail, meetingSchedule)
+            }
 
             return result
         } catch (Exception ex) {
